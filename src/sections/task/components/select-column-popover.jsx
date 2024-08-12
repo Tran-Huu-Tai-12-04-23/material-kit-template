@@ -32,7 +32,6 @@ export default function SelectColumnPopover() {
        <IconButton onClick={handleOpen} sx={{background: () => alpha(theme.palette.primary.main, 0.2), width: 50, height: 50 } }>
               <SettingVerticalIcon color={theme.palette.primary.main}/>
             </IconButton>
-
       <Popover
         open={!!open}
         anchorEl={open}
@@ -53,7 +52,7 @@ export default function SelectColumnPopover() {
             sx={{borderRadius: 2,mt:1, mb:1}} key={index}
             >
               <Switch checked={columnsActive?.includes(option.id)}/>
-              <Typography  variant='h7'>
+              <Typography  variant='h7' sx={{fontSize: 12}}>
                 {option.name}
               </Typography>
               <Paper sx={{width: 20, height: 20, background: option.color,ml:2 }}/>

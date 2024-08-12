@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import { alpha } from '@mui/material/styles';
 
@@ -24,7 +23,7 @@ const Root = styled('div')(
   border-radius: 6px;
   padding: 4px;
   display: flex;
-  overflow: auto-scroll;
+
 
   &:hover {
     border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
@@ -115,31 +114,18 @@ export default function SelectBoardPopover() {
            mb: 1
      }}>
       <Stack direction="row" alignItems="center" gap={2} sx={{p: 2}} >
-         <IconButton
-        sx={{
-          width: 40,
-          height: 40,
-          overflow: 'hidden',
-          background: () => alpha(theme.palette.grey[500], 0.08),
-          ...(open && {
-            background: () =>
-              `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
-          }),
-        }}
-      >
-        <Avatar
+          <Avatar 
           src={currentTeam ? currentTeam?.thumbnails : account.photoURL}
           alt={currentTeam?.name}
           sx={{
             width: 50,
             height: 50,
+            r: 2, minWidth: 100 , borderRadius: 1,
             border: () => `solid 2px ${theme.palette.background.default}`,
           }}
         >
           {currentTeam?.name?.charAt(0).toUpperCase()}
         </Avatar>
-
-      </IconButton>
 
   {currentTeam?.name || 'Select board'}
        <Stack direction="row" alignItems="center" gap={1}>
@@ -167,22 +153,21 @@ export default function SelectBoardPopover() {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        className='hide-scroll'
         PaperProps={{
           sx: {
             mt: 1,
             ml: 0.75,
             width: 400,
             p: 2,
-            height: 250,
             maxHeight: 700,
-            overflow: 'auto'
           },
         }}
       >
-        <Root className={`${isFocus ? 'Mui-focused' : ''} `}>
+        <Root className={`${isFocus ? 'Mui-focused' : ''} `} >
           <InputWrapper value={search} onChange={(e) => setSearch(e.target.value)} onFocus={() => setIsFocus(true)} onBlur={() => setIsFocus(false)}  placeholder="Select board" />
         </Root>
-        <Box sx={{ my: 1.5, px: 2 }} />
+        <Box sx={{ my: 1.5, px: 2, pt: 1 }} />
           {dataSelect.map((option, index) => (
             <MenuItem onClick={() => {
               setOpen(null)
@@ -191,8 +176,8 @@ export default function SelectBoardPopover() {
             sx={{borderRadius: 2,mt:1, mb:1, background: currentTeam?.id === option.id ? alpha(theme.palette.primary.main, 0.2) : 'transparent'}} key={index}
             >
               
-              <Avatar src={option.thumbnails} sx={{ mr: 2 }} />
-              <Typography>
+              <Avatar src={option.thumbnails} sx={{ mr: 2, minWidth: 100 , borderRadius: 0.5}} />
+              <Typography sx={{fontSize: 14}}>
               {option.name}</Typography></MenuItem>
           ))}
       </Popover>

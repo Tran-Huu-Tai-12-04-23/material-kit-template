@@ -55,7 +55,7 @@ function TaskItem({ data, isRotate }) {
         } ,
         boxShadow: isRotate ? '0px 2px 4px rgba(0, 0, 0, 0.08)' : '0px 2px 4px transparent',
       }}
-      focusRipple
+  
     >
       <Stack  {...listeners} minHeight={50} direction="row" gap={1} alignItems="center" justifyContent="space-between">
         <Typography   variant="h7" fontSize={12} fontWeight={800}>

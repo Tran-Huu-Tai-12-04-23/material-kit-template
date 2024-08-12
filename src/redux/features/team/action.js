@@ -38,17 +38,17 @@ export const useTeamAction = () => {
   };
   const getLstUserToInvite = useCallback(
     async (lstUserExist) => {
-      await dispatch(getLstUserToInviteTeamAsync({ lstUserExist, page }));
+      dispatch(getLstUserToInviteTeamAsync({ lstUserExist, page }));
     },
     [page]
   );
 
   const paginationTeamOfUserCallback = useCallback(async () => {
-    await dispatch(paginationTeamOfUserAsync(pageOfTeam));
+    dispatch(paginationTeamOfUserAsync(pageOfTeam));
     setPageOfTeam(pageOfTeam + 1);
   }, [pageOfTeam]);
   const createNewTeamCallBack = async (team) => {
-    await dispatch(addTeamAsync(team));
+    dispatch(addTeamAsync(team));
   };
 
   useEffect(() => {
@@ -59,6 +59,6 @@ export const useTeamAction = () => {
     paginationTeamOfUser: paginationTeamOfUserCallback,
     createNewTeam: createNewTeamCallBack,
     changeCurrent,
-    getLstUserToInvite,
+    onGetLstUserToInvite: getLstUserToInvite,
   };
 };

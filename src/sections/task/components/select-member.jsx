@@ -1,16 +1,16 @@
 import { useAutocomplete } from '@mui/base/useAutocomplete';
-import { Box, Stack, Typography } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { Avatar, Box, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { InputWrapper } from 'src/components/input';
+import { useTeamAction } from 'src/redux/features/team/action';
 import { useTeamState } from 'src/redux/features/team/teamSlice';
-import { Listbox, Root, StyledTag } from '../style';
-import { BOARD_TAG } from './tag-enum';
+import { Listbox, Root } from './style';
 
+export default function SelectMember({ onChangeValue }) {
+  const { lstUser } = useTeamState();
+  const { onGetLstUserToInvite } = useTeamAction();
 
-export default function SelectTag({onChangeValue}) {
-  const {teams} = useTeamState()
   const [selectedValue, setSelectedValue] = useState([]);
- const values = useMemo(() => Object.keys(BOARD_TAG).map((key) => BOARD_TAG[key]), [teams])
   const {
     getRootProps,
     getInputProps,
@@ -24,20 +24,22 @@ export default function SelectTag({onChangeValue}) {
   } = useAutocomplete({
     id: 'customized-hook-demo',
     multiple: true,
-    options: values|| [],
+    options: lstUser || [],
     value: selectedValue,
-    getOptionLabel: (option) => option.name,
+    getOptionLabel: (option) => option.name || option.username || 'Unknown',
     onChange: (event, newValue) => {
       setSelectedValue(newValue);
-      onChangeValue( newValue.map( item => item.name))
-    }
+      onChangeValue(newValue.map((item) => item.id));
+    },
   });
 
+  useEffect(() => {
+    onGetLstUserToInvite();
+  }, []);
 
-  
   return (
     <Root>
-      <Box sx={{width: '100%'}} {...getRootProps()}>
+      <Box sx={{ width: '100%' }} {...getRootProps()}>
         <InputWrapper minWidth="100%" ref={setAnchorEl} className={focused ? 'focused' : ''}>
           <Stack
             direction="row"
@@ -51,13 +53,9 @@ export default function SelectTag({onChangeValue}) {
               .map((option, index) => {
                 const { key, ...tagProps } = getTagProps({ index });
                 return (
-                  <StyledTag
-                    key={key}
-                    {...tagProps}
-                    label={option.name}
-                    color={option?.color}
-                    backgroundColor={option?.background}
-                  />
+                  <Avatar sx={{ height: 25, width: 25 }} key={key} {...tagProps}>
+                    {option.username.charAt(0).toUpperCase()}
+                  </Avatar>
                 );
               })}
             {value.length > 2 && (
@@ -66,19 +64,16 @@ export default function SelectTag({onChangeValue}) {
               </Typography>
             )}
           </Stack>
-          <input placeholder="select tags" {...getInputProps()} />
+          <input placeholder="Select members" {...getInputProps()} />
         </InputWrapper>
       </Box>
       {groupedOptions.length > 0 ? (
-        <Listbox  {...getListboxProps()}>
-          {values?.map((option, index) => {
-            const { key,  ...optionProps } = getOptionProps({ option, index });
+        <Listbox {...getListboxProps()}>
+          {lstUser?.map((option, index) => {
+            const { key, ...optionProps } = getOptionProps({ option, index });
             return (
-              <li 
-              key={key}
-                {...optionProps}
-              >
-                {option.name}
+              <li key={key} {...optionProps}>
+                {option.username}
               </li>
             );
           })}

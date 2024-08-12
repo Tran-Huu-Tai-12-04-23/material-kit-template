@@ -43,7 +43,7 @@ function Column({ data }) {
         sx={{ padding: 2, height: HEADER.H_DESKTOP / 2, minWidth: 200 }}
       >
         <Stack className="ignore-scroll" {...listeners} direction="row" gap={1} alignItems="center">
-          <Typography variant="h7" fontWeight={800}>
+          <Typography variant="h7" sx={{fontSize: 12}} fontWeight={700}>
             {data?.name}
           </Typography>
           <Chip

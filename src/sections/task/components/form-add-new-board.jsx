@@ -1,16 +1,17 @@
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { EffectBtn } from "src/components/EffectBtn";
 import { ButtonPrimary } from "src/components/button";
 import UploadBtn from "src/components/upload";
+import { useModal } from "src/contexts/modal-context";
 import { useTeamAction } from "src/redux/features/team/action";
+import { useTeamState } from "src/redux/features/team/teamSlice";
+import SelectMember from "./select-member";
 import SelectTag from "./select-tags";
 
 
-
-
-
 export default function FormAddNewBoard() {
+    const {hideModal} = useModal()
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -18,11 +19,17 @@ export default function FormAddNewBoard() {
         isNameError: false,
     })
       const { createNewTeam } = useTeamAction();
+      const {isLoadingCreateNew} = useTeamState()
 
     const handleCreateTeam = async () => {
         setState({ ...state, isNameError: state.name === '' })
         if(state.name !== '') {
-            await createNewTeam(state)
+            await createNewTeam({
+                ...state, tags: state.tags.join(","),
+                 thumbnails: state.thumbnails || "https://firebasestorage.googleapis.com/v0/b/travelappsu.appspot.com/o/undraw_choose_card_n0x0.png?alt=media&token=a3d7f996-ee91-4cfc-9c71-2f2ad7866d03"
+            }).then(() => {
+               if(!isLoadingCreateNew) hideModal()
+            })
         }
     }
 
@@ -44,8 +51,9 @@ export default function FormAddNewBoard() {
           onChange={(e) => setState({ ...state, name: e.target.value, isNameError: false })}
         />
         <SelectTag onChangeValue={value => setState({...state, tags: value})}/>
+            <SelectMember onChangeValue={value => setState({...state, members: value})}/>
         <Stack direction="row" gap={2} justifyContent="end">
-            <ButtonPrimary onClick={handleCreateTeam}>Create</ButtonPrimary>
+            <ButtonPrimary disabled={isLoadingCreateNew} onClick={handleCreateTeam}>{isLoadingCreateNew && <CircularProgress size={20}/>}Create</ButtonPrimary>
         </Stack>
     </Stack>
 }
