@@ -34,7 +34,7 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const {currentUser} = useAuthState()
+  const { currentUser } = useAuthState();
   const { resetState } = useResetState();
 
   const handleOpen = (event) => {

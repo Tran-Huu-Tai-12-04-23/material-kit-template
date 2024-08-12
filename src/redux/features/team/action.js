@@ -1,26 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-next-line import/order
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   createNewTeam,
   getLstUserToInviteTeam,
   paginationTeamOfUser,
-} from "../../../services/team";
+} from '../../../services/team';
 // eslint-disable-next-line import/no-cycle
-import { changeCurrentTeams } from "./teamSlice";
+import { resetColumnState } from '../column/columnSlice';
+import { changeCurrentTeams } from './teamSlice';
 
 export const TeamActionKey = {
-  ADD_TEAM: "team/add_team",
-  LST_USER_TO_INVITE_TEAM: "team/lst_user_to_invite_team",
-  LST_TEAM_OF_USER: "team/lst_team_of_user",
-}
-export const addTeamAsync = createAsyncThunk(
-  TeamActionKey.ADD_TEAM,
-  createNewTeam
+  ADD_TEAM: 'team/add_team',
+  LST_USER_TO_INVITE_TEAM: 'team/lst_user_to_invite_team',
+  LST_TEAM_OF_USER: 'team/lst_team_of_user',
+};
+export const addTeamAsync = createAsyncThunk(TeamActionKey.ADD_TEAM, createNewTeam);
+export const getLstUserToInviteTeamAsync = createAsyncThunk(
+  TeamActionKey.LST_USER_TO_INVITE_TEAM,
+  getLstUserToInviteTeam
 );
-export const getLstUserToInviteTeamAsync = createAsyncThunk(TeamActionKey.LST_USER_TO_INVITE_TEAM, getLstUserToInviteTeam);
 
 export const paginationTeamOfUserAsync = createAsyncThunk(
   TeamActionKey.LST_TEAM_OF_USER,
@@ -33,6 +34,7 @@ export const useTeamAction = () => {
   const [pageOfTeam, setPageOfTeam] = useState(0);
   const changeCurrent = (team) => {
     dispatch(changeCurrentTeams(team));
+    dispatch(resetColumnState());
   };
   const getLstUserToInvite = useCallback(
     async (lstUserExist) => {

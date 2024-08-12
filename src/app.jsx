@@ -15,7 +15,7 @@ import { useAuthState } from './redux/features/auth/authSlice';
 export default function App() {
   useScrollToTop();
 
-  const {currentUser} = useAuthState()
+  const { currentUser } = useAuthState();
   const { getProfile } = useAuthAction();
 
   useEffect(() => {

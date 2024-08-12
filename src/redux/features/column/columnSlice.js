@@ -1,8 +1,12 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-cycle
-import { createColumnAsync, createTaskAsync, loadListColumnOfTeamAsync } from './action';
+import {
+  createColumnAsync,
+  createTaskAsync,
+  loadDataToFilterAsync,
+  loadListColumnOfTeamAsync,
+} from './action';
 // export interface IFilter {
 //   searchKey: string;
 //   status: string;
@@ -19,7 +23,7 @@ import { createColumnAsync, createTaskAsync, loadListColumnOfTeamAsync } from '.
 // }
 const initFilter = {
   searchKey: '',
-  status: '',
+  lstStatus: [],
   members: [],
 };
 const initialState = {
@@ -29,6 +33,10 @@ const initialState = {
   isLoadingCreateNewTask: false,
   currentColumn: null,
   filter: initFilter,
+  filterData: {
+    lstStatus: [],
+  },
+  columnsActive: [],
 };
 
 const columnSlice = createSlice({
@@ -41,6 +49,15 @@ const columnSlice = createSlice({
         [action.payload.key]: action.payload.value,
       };
       state.isLoading = true;
+    },
+    toggleColumnActive: (state, action) => {
+      const id = action.payload;
+      const columnActiveExist = state.columnsActive.find((item) => item === id);
+      if (columnActiveExist) {
+        state.columnsActive = [...state.columnsActive.filter((item) => item !== id)];
+      } else {
+        state.columnsActive = [...state.columnsActive, id];
+      }
     },
     addColumn: (state, action) => {
       state.columns = [action.payload, ...state.columns];
@@ -87,6 +104,12 @@ const columnSlice = createSlice({
       .addCase(loadListColumnOfTeamAsync.fulfilled, (state, action) => {
         state.isLoading = false;
         state.columns = action.payload;
+        if (state.columnsActive.length <= 0)
+          state.columnsActive = [...action.payload.map((item) => item.id)];
+      })
+      .addCase(loadDataToFilterAsync.fulfilled, (state, action) => {
+        state.isLoadingCreateNewColumn = false;
+        state.filterData = action.payload;
       })
       .addCase(createTaskAsync.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -114,6 +137,9 @@ const columnSlice = createSlice({
       .addCase(createColumnAsync.pending, (state) => {
         state.isLoadingCreateNewColumn = false;
       })
+      .addCase(loadListColumnOfTeamAsync.pending, (state) => {
+        state.isLoading = true;
+      })
       .addMatcher(
         (action) =>
           [createColumnAsync.rejected, loadListColumnOfTeamAsync.rejected].includes(action.type),
@@ -136,6 +162,7 @@ export const {
   swapBetweenColumn,
   changeFilter,
   clearColumnFilter,
+  toggleColumnActive,
 } = columnSlice.actions;
 
 export const selectColumn = (state) => state.column;

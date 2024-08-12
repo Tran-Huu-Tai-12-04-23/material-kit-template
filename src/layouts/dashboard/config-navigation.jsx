@@ -12,7 +12,7 @@ const navConfig = [
     path: '/',
     icon: icon('ic_analytics'),
   },
-   {
+  {
     title: 'task',
     path: '/task',
     icon: icon('ic_task'),

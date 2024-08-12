@@ -14,11 +14,11 @@ export const Page404 = lazy(() => import('src/pages/public/page-not-found'));
 
 // ----------------------------------------------------------------------
 
- function AuthRouter() {
+function AuthRouter() {
   const routes = useRoutes([
     {
       element: (
-        <Suspense fallback={<LoadingView/>}>
+        <Suspense fallback={<LoadingView />}>
           <Outlet />
         </Suspense>
       ),
@@ -37,12 +37,12 @@ export const Page404 = lazy(() => import('src/pages/public/page-not-found'));
   return routes;
 }
 
- function PrivateRouter() {
+function PrivateRouter() {
   const routes = useRoutes([
     {
       element: (
         <DashboardLayout>
-          <Suspense fallback={<LoadingView/>}>
+          <Suspense fallback={<LoadingView />}>
             <Outlet />
           </Suspense>
         </DashboardLayout>
@@ -67,6 +67,5 @@ export const Page404 = lazy(() => import('src/pages/public/page-not-found'));
 
   return routes;
 }
-
 
 export { AuthRouter, PrivateRouter };

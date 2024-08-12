@@ -1,4 +1,4 @@
-const MessageIcon = ({ size = 20, color = "#F59E0B", ...props }) => (
+const MessageIcon = ({ size = 20, color = '#F59E0B', ...props }) => (
   <svg
     width={size}
     height={size}

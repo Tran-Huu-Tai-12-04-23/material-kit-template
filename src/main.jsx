@@ -8,22 +8,26 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from './redux/store';
 
 import App from './app';
-
-
+import ModalProvider from './contexts/modal-context';
 
 // ----------------------------------------------------------------------
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <HelmetProvider>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Suspense>
-          <App />
-          <ToastContainer style={{ zIndex: 100000000 }} theme="light" />
-        </Suspense>
-      </BrowserRouter>
-    </Provider>
-  </HelmetProvider>
+
+    <HelmetProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Suspense>
+                <ModalProvider>
+              <App />
+              <ToastContainer style={{ zIndex: 100000000 }} theme="light" />
+               </ModalProvider>
+            </Suspense>
+          </BrowserRouter>
+        </Provider>
+      </HelmetProvider>
+ 
+  
 );

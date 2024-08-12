@@ -58,13 +58,11 @@ export default function Header({ onOpenNav }) {
         transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,
         }),
-         borderBottom: () => `dashed 1px ${theme.palette.divider}`,
+        borderBottom: () => `dashed 1px ${theme.palette.divider}`,
         ...(lgUp && {
           width: `calc(100% - ${NAV.WIDTH + 1}px)`,
           height: HEADER.H_DESKTOP,
         }),
-          
-
       }}
     >
       <Toolbar

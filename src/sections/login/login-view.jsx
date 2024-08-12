@@ -14,7 +14,6 @@ import { alpha, useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-
 import { bgGradient } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
@@ -29,26 +28,26 @@ export default function LoginView() {
     isPasswordError: false,
     isUserNameError: false,
     username: '',
-    password: ''
-  })
-  const {onLogin} = useAuthAction()
-  const {isLoading} = useAuthState()
+    password: '',
+  });
+  const { onLogin } = useAuthAction();
+  const { isLoading } = useAuthState();
   const theme = useTheme();
 
   const [showPassword, setShowPassword] = useState(false);
 
-   async function handleLogin() {
+  async function handleLogin() {
     setState({
-      ...state, 
+      ...state,
       isUserNameError: state.username === '',
       isPasswordError: state.password === '',
-    })
+    });
 
-    if (state.username === '' || state.password === ''){
-      return
+    if (state.username === '' || state.password === '') {
+      return;
     }
-    await onLogin({username: state.username, password: state.password})
-  };
+    await onLogin({ username: state.username, password: state.password });
+  }
 
   const renderForm = (
     <>
@@ -76,7 +75,7 @@ export default function LoginView() {
                   <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
-            ),  
+            ),
           }}
         />
       </Stack>
@@ -88,7 +87,7 @@ export default function LoginView() {
       </Stack>
 
       <LoadingButton
-      // isLoading={isLoading}
+        // isLoading={isLoading}
         fullWidth
         size="large"
         type="submit"

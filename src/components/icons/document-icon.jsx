@@ -1,4 +1,4 @@
-const DocumentIcon = ({ size = 20, color = "#33BFFF", ...props }) => (
+const DocumentIcon = ({ size = 20, color = '#33BFFF', ...props }) => (
   <svg
     width={size}
     height={size}

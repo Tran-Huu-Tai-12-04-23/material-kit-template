@@ -1,11 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 // eslint-disable-next-line import/no-cycle
-import {
-  addTeamAsync,
-  getLstUserToInviteTeamAsync,
-  paginationTeamOfUserAsync,
-} from "./action";
+import { addTeamAsync, getLstUserToInviteTeamAsync, paginationTeamOfUserAsync } from './action';
 
 // interface TeamState {
 //   teams: ITeam[];
@@ -28,7 +24,7 @@ const initialState = {
 };
 
 const teamSlice = createSlice({
-  name: "team",
+  name: 'team',
   initialState,
   reducers: {
     addTask: (state, action) => {
@@ -85,8 +81,7 @@ const teamSlice = createSlice({
 
 export default teamSlice.reducer;
 
-export const { addTask, changeCurrentTeams, resetTeamState } =
-  teamSlice.actions;
+export const { addTask, changeCurrentTeams, resetTeamState } = teamSlice.actions;
 
 export const selectTask = (state) => state.team;
 

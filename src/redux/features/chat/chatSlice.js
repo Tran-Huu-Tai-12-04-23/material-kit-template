@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
+import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 import {
   createNewChatAsync,
   fetchNextPageMessagePaginationAsync,
@@ -32,16 +32,14 @@ const initialState = {
 };
 
 const chatSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState,
   reducers: {
     addGroupChat: (state, action) => {
       state.lstGroupChat.push(action.payload);
     },
     addMessage: (state, action) => {
-      const isCheckMessageExist = state.messages.find(
-        (item) => item.id === action.payload.id
-      );
+      const isCheckMessageExist = state.messages.find((item) => item.id === action.payload.id);
       if (!isCheckMessageExist) {
         state.messages = [action.payload, ...state.messages];
       }
@@ -75,14 +73,11 @@ const chatSlice = createSlice({
         state.messages = [...action.payload];
         state.isLoadingMessagePagination = false;
       })
-      .addCase(
-        fetchNextPageMessagePaginationAsync.fulfilled,
-        (state, action) => {
-          state.messages = [...state.messages, ...action.payload];
-          state.isLoadingMessagePagination = false;
-          state.isHasNextMessagePagination = action.payload.length >= 15;
-        }
-      )
+      .addCase(fetchNextPageMessagePaginationAsync.fulfilled, (state, action) => {
+        state.messages = [...state.messages, ...action.payload];
+        state.isLoadingMessagePagination = false;
+        state.isHasNextMessagePagination = action.payload.length >= 15;
+      })
       .addCase(messagePaginationAsync.pending, (state) => {
         state.isLoadingMessagePagination = true;
       })

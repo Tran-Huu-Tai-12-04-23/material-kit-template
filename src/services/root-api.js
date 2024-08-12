@@ -1,4 +1,4 @@
-import initApi from "./initApi";
+import initApi from './initApi';
 
 const rootApi = initApi(import.meta.env.VITE_LINK_API);
 

@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-import { getProfileAsync, signInAsync } from "./action";
+import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
+import { getProfileAsync, signInAsync } from './action';
 
 // interface AuthState {
 //   currentUser: IUser | null;
@@ -18,12 +18,12 @@ const initialState = {
   currentUser: null,
   isLoading: false,
   isError: false,
-  error: "",
+  error: '',
   enumData: null,
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: { ...initialState, isLoading: false },
   reducers: {
     resetAuthState: () => initialState,

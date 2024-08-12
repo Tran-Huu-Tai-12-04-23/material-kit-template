@@ -1,5 +1,5 @@
-import { io } from "socket.io-client";
-import { getAccessToken } from "../helper/index";
+import { io } from 'socket.io-client';
+import { getAccessToken } from '../helper/index';
 
 const token = await getAccessToken();
 // export interface MessageDTO {
@@ -28,15 +28,15 @@ const subscribeToChat = (callback) => {
     callback(message);
   };
 
-  socket?.on("chat message", eventHandler);
+  socket?.on('chat message', eventHandler);
 
   return () => {
-    socket?.off("chat message", eventHandler);
+    socket?.off('chat message', eventHandler);
   };
 };
 
 const sendMessage = (message) => {
-  socket?.emit("chat message", message);
+  socket?.emit('chat message', message);
 };
 
 export { connect, disconnect, sendMessage, subscribeToChat };
